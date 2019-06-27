@@ -2,6 +2,11 @@
 //
 #include "pch.h"
 #include "main.h"
+#include "DataProcessor.h"
+#include <vector>
+
+// Instantiate data processor
+DataProcessor dataProcessor;
 
 int main()
 {
@@ -43,14 +48,27 @@ void AcceptValidInput()
 
 		// Enter a dependency
 		std::string dependencyToEnter;
-		std::cout << "Enter dependency for " << jobCounter << "th job or press return if there is no dependency\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+		std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
 		std::cin >> dependencyToEnter;
 		std::cout << std::endl;
 
 		// Add entered job and dependency to list and ask for next one
+		dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
+		jobCounter++;
 
 		// TODO change this to false after user has finished entering input
-		stillEnteringInput = false;
+		if (jobCounter > 5)
+		{
+			stillEnteringInput = false;
+		}
+	}
+
+	// Printing input to check this is working
+	std::vector<std::string> jobs = dataProcessor.GetJobsList();
+	std::vector<std::string> dependencies = dataProcessor.GetDependenciesList();
+	for (int i = 0; i < (int)jobs.size(); i++)
+	{
+		std::cout << jobs[i] << "=>" << dependencies[i] << std::endl;
 	}
 		
 
