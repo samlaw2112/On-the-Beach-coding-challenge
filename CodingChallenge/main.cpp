@@ -2,11 +2,12 @@
 //
 
 #include "pch.h"
-#include <iostream>
+#include "main.h"
 
 int main()
 {
-    // Print instructions for data input
+    // Welcome and print instructions for data input
+	ShowWelcomeScreen();
 
 	// Accept data input
 
@@ -19,3 +20,11 @@ int main()
 
 	// Output job list
 }
+
+void ShowWelcomeScreen()
+{
+	std::cout << "Welcome to my solution for the On the Beach coding challenge.\n\n";
+	std::cout << "You will be asked to enter each job to be processed one at a time. For each job you will have the option of including a dependency.\n\n";
+}
+
+
