@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 // Welcomes user and shows instructions for data input
 void ShowWelcomeScreen();
