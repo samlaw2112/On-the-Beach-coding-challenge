@@ -37,10 +37,10 @@ InputValidity DataProcessor::CheckInputValidity()
 	{
 		return InputValidity::Dependency_Doesnt_Exist;
 	}
-
-	// if can't find an order that fulfills dependencies
-		// return Circular_Dependency
-
+	else if (!SortJobsIfPossible())
+	{
+		return InputValidity::Circular_Dependency;
+	}
 	else { return InputValidity::Valid; }
 };
 
@@ -124,3 +124,58 @@ bool DataProcessor::NonExistentDependency()
 	// Return false if we made it to the end without finding a non-existent dependency
 	return false;				
 };
+
+bool DataProcessor::SortJobsIfPossible()
+{
+	std::vector<std::string> sortedJobNames;
+
+	// Loop until we finish sorting the list or run into a circular dependency
+	bool sortingComplete = false;
+	while (!sortingComplete)
+	{
+		// Loop until we find the next job to go in sorted list, then start again from the top
+		bool foundNextJob = false;
+		while (!foundNextJob)
+		{
+			// For each job
+			for (int i = 0; i < (int)jobs.size(); i++)
+			{
+				// If no dependency
+				if (!jobs[i].HasDependency())
+				{
+					// Add to sorted list
+					sortedJobNames.push_back(jobs[i].GetJobName());
+					jobs.erase(jobs.begin() + i); // Delete sorted job from original jobs list
+					foundNextJob = true;
+					break;
+				}
+				else // If dependency
+				{
+					// Check that dependency job is alright added to the list
+					std::string thisDependency = jobs[i].GetDependency();
+
+					for (int j = 0; j < (int)sortedJobNames.size(); j++)
+					{
+						// If yes add to list
+						if (thisDependency.compare(sortedJobNames[j]) == 0)
+						{
+							sortedJobNames.push_back(jobs[i].GetJobName());
+							jobs.erase(jobs.begin() + i); // Delete sorted job from original jobs list
+							foundNextJob = true;
+							break;
+						}
+					}  // If no move on to next job
+				}
+			}
+			// If made a complete pass through job list without finding any that can go into sorted list, assume circular dependency
+			if (!foundNextJob){ return false; }
+		}
+		// If moved all jobs over to sorted list then we're done
+		if (jobs.empty()) { 
+			sortingComplete = true;
+			return true; 
+		}
+	}
+	// To stop compiler complaining that not all paths return a value, but we should never get here
+	return false;
+}

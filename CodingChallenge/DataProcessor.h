@@ -38,4 +38,7 @@ private:
 	// Checks dependencies without a matching job
 	bool NonExistentDependency();
 
+	// Sorts jobs into correct order if possible and returns true. Returns false if finds a circular dependency.
+	bool SortJobsIfPossible();
+
 };

@@ -72,6 +72,11 @@ void AcceptValidInput()
 	case InputValidity::Dependency_Doesnt_Exist:
 		std::cout << "Error: Cannot enter a dependency that does not match an existing job name.\n\n";
 		break;
+	case InputValidity::Circular_Dependency:
+		std::cout << "Error: Found circular dependency. Cannot sort jobs.\n\n";
+		break;
+	case InputValidity::Valid:
+		std::cout << "Successfully sorted jobs.\n\n";
 	}
 
 	// Printing input to check this is working
