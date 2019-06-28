@@ -23,7 +23,7 @@ public:
 	void AddNewJobAndDependency(std::string jobName, std::string dependency);
 
 	// Check whether input is valid
-	InputValidity CheckInputValidity(); // Making this const causes an error - probably it shouldn't
+	InputValidity CheckInputValidity(); // Not const because job order will be sorted when checking for circular dependencies
 
 	std::vector<std::string> GetJobsList() const;
 	std::vector<std::string> GetDependenciesList() const;
@@ -34,5 +34,8 @@ private:
 
 	// Checks for repeated job names
 	bool RepeatedJobs();
+
+	// Checks dependencies without a matching job
+	bool NonExistentDependency();
 
 };

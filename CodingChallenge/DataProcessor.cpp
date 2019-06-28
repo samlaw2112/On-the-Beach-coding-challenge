@@ -32,10 +32,11 @@ InputValidity DataProcessor::CheckInputValidity()
 	if (RepeatedJobs())
 	{
 		return InputValidity::Repeated_Jobs;
-	} 
-
-	// if find a dependency without matching job
-		// return Dependency_Doesnt_Exist
+	}
+	else if (NonExistentDependency())
+	{
+		return InputValidity::Dependency_Doesnt_Exist;
+	}
 
 	// if can't find an order that fulfills dependencies
 		// return Circular_Dependency
@@ -88,4 +89,38 @@ bool DataProcessor::RepeatedJobs()
 	}
 	// Return false if we made it to the end without finding any repeats
 	return false;
+};
+
+bool DataProcessor::NonExistentDependency()
+{
+	// Gather list of job names
+	std::vector<std::string> jobNames;
+	for (int i = 0; i < (int)jobs.size(); i++)
+	{
+		jobNames.push_back(jobs[i].GetJobName());
+	}
+
+	// For each job
+	for (int i = 0; i < (int)jobs.size(); i++)
+	{
+		// If it has a dependency
+		if (jobs[i].HasDependency())
+		{
+			// Check it matches one of the job names
+			std::string thisDependency = jobs[i].GetDependency();
+			bool foundMatch = false;
+
+			for (int j = 0; j < (int)jobNames.size(); j++)
+			{
+				if (thisDependency.compare(jobNames[j]) == 0)
+				{
+					foundMatch = true;
+				}
+			}
+			// If no matches return true
+			if (!foundMatch) { return true; }
+		}
+	}
+	// Return false if we made it to the end without finding a non-existent dependency
+	return false;				
 };
