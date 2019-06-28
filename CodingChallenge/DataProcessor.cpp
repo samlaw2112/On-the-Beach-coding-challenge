@@ -41,6 +41,11 @@ void DataProcessor::AddNewJobAndDependency(std::string jobName, std::string depe
 	jobs.push_back(newJob);
 };
 
+void DataProcessor::FlushData()
+{
+	jobs.clear();
+}
+
 bool DataProcessor::RepeatedJobs()
 {
 	// Gather list of job names

@@ -25,57 +25,66 @@ void ShowWelcomeScreen()
 
 void ProcessInput()
 {
-	// Loop until user has finished entering jobs
-	bool stillEnteringInput = true;
-	int jobCounter = 1; // To keep track of how many jobs have been entered
-
-	while (stillEnteringInput)
+	// Loop until valid input has been entered, so if any errors the user can try again
+	bool enteredValidInput = false;
+	while (!enteredValidInput)
 	{
-		// Enter a job
-		std::string jobToEnter;
-		std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
-		std::cin >> jobToEnter;
-		std::cout << std::endl;
+		// Flush any previously entered data
+		dataProcessor.FlushData();
 
-		// Quit if user typed fin
-		if (jobToEnter.compare("fin") == 0) { stillEnteringInput = false; break; }
+		// Loop until user has finished entering jobs
+		bool stillEnteringInput = true;
+		int jobCounter = 1; // To keep track of how many jobs have been entered
 
-		// Enter a dependency
-		std::string dependencyToEnter;
-		std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
-		std::cin >> dependencyToEnter;
-		std::cout << std::endl;
-
-		// Add entered job and dependency to list and ask for next one
-		dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
-		jobCounter++;
-	}
-
-	// Check input is valid
-	InputValidity inputValidity = dataProcessor.CheckInputValidity();
-
-	// Print output depending on input validity
-	switch (inputValidity)
-	{
-	case InputValidity::Repeated_Jobs:
-		std::cout << "Error: Cannot enter the same job name more than once.\n\n";
-		break;
-	case InputValidity::Self_Dependency:
-		std::cout << "Error: Jobs cannot depend on themselves.\n\n";
-		break;
-	case InputValidity::Dependency_Doesnt_Exist:
-		std::cout << "Error: Cannot enter a dependency that does not match an existing job name.\n\n";
-		break;
-	case InputValidity::Circular_Dependency:
-		std::cout << "Error: Found circular dependency. Cannot sort jobs.\n\n";
-		break;
-	case InputValidity::Valid:
-		// For valid input print the sorted list
-		std::vector<std::string> sortedJobNames = dataProcessor.GetSortedJobsNames();
-		std::cout << "Execute jobs in the following order:\n";
-		for (int i = 0; i < (int)sortedJobNames.size(); i++)
+		while (stillEnteringInput)
 		{
-			std::cout << sortedJobNames[i] << std::endl;
+			// Enter a job
+			std::string jobToEnter;
+			std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+			std::cin >> jobToEnter;
+			std::cout << std::endl;
+
+			// Quit if user typed fin
+			if (jobToEnter.compare("fin") == 0) { stillEnteringInput = false; break; }
+
+			// Enter a dependency
+			std::string dependencyToEnter;
+			std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+			std::cin >> dependencyToEnter;
+			std::cout << std::endl;
+
+			// Add entered job and dependency to list and ask for next one
+			dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
+			jobCounter++;
+		}
+
+		// Check input is valid
+		InputValidity inputValidity = dataProcessor.CheckInputValidity();
+
+		// Print output depending on input validity
+		switch (inputValidity)
+		{
+		case InputValidity::Repeated_Jobs:
+			std::cout << "Error: Cannot enter the same job name more than once.\n\n";
+			break;
+		case InputValidity::Self_Dependency:
+			std::cout << "Error: Jobs cannot depend on themselves.\n\n";
+			break;
+		case InputValidity::Dependency_Doesnt_Exist:
+			std::cout << "Error: Cannot enter a dependency that does not match an existing job name.\n\n";
+			break;
+		case InputValidity::Circular_Dependency:
+			std::cout << "Error: Found circular dependency. Cannot sort jobs.\n\n";
+			break;
+		case InputValidity::Valid:
+			// For valid input print the sorted list
+			std::vector<std::string> sortedJobNames = dataProcessor.GetSortedJobsNames();
+			std::cout << "Execute jobs in the following order:\n";
+			for (int i = 0; i < (int)sortedJobNames.size(); i++)
+			{
+				std::cout << sortedJobNames[i] << std::endl;
+			}
+			enteredValidInput = true;
 		}
 	}
 

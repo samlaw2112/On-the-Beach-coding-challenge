@@ -29,6 +29,9 @@ public:
 	// To access sorted job names
 	std::vector<std::string> GetSortedJobsNames() const;
 
+	// Deletes existing job data
+	void FlushData();
+
 private:
 	// Will keep track of entered jobs and dependencies
 	std::vector <Job> jobs;
