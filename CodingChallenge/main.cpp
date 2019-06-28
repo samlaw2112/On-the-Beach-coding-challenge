@@ -63,7 +63,7 @@ void ProcessInput()
 			}
 			std::cout << "Enter " << jobStr << " job or type fin if you have finished entering jobs\n";
 			std::string jobToEnter;
-			std::cin >> jobToEnter;
+			std::getline(std::cin, jobToEnter);
 			std::cout << std::endl;
 
 			// Quit if user typed fin
@@ -71,8 +71,8 @@ void ProcessInput()
 
 			// Enter a dependency
 			std::string dependencyToEnter;
-			std::cout << "Enter dependency for " << jobStr << " job or na if there is no dependency\n";
-			std::cin >> dependencyToEnter;
+			std::cout << "Enter dependency for " << jobStr << " job or press return if there is no dependency\n";
+			std::getline(std::cin, dependencyToEnter);
 			std::cout << std::endl;
 
 			// Add entered job and dependency to list and ask for next one
@@ -118,7 +118,7 @@ bool AskToGoAgain()
 	std::cout << "Would you like to enter new data? (yes/no)\n";
 
 	std::string response;
-	std::cin >> response;
+	std::getline(std::cin, response);
 	std::cout << std::endl;
 
 	return(response[0] == 'y' || response[0] == 'Y');

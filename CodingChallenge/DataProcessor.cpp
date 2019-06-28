@@ -31,8 +31,8 @@ void DataProcessor::AddNewJobAndDependency(std::string jobName, std::string depe
 	Job newJob;
 	newJob.SetJobName(jobName);
 	
-	// Add dependency if the user didn't enter na for no dependency
-	if (dependency.compare("na") != 0)
+	// Add dependency if the user entered one
+	if (!dependency.empty())
 	{
 		newJob.SetDependency(dependency);
 	}
