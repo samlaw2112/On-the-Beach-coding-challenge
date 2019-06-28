@@ -25,6 +25,12 @@ int main()
 void ShowWelcomeScreen()
 {
 	std::cout << "Welcome to my solution for the On the Beach coding challenge.\n\n";
+	std::cout << "_\\/_                 |                _\\/_ " << std::endl;
+	std::cout << "/o\\             \\        /             /o\\ " << std::endl;
+	std::cout << " |                 .---.                | " << std::endl;
+	std::cout << "_|_______     --  /     \\   --     _____|__ " << std::endl;
+	std::cout << "         `~^~^~^~^~^~^~^~^~^~^~^~`" << std::endl;
+	std::cout << std::endl;
 }
 
 void ProcessInput()
