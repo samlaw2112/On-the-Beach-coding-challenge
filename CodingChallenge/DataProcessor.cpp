@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DataProcessor.h"
 
-std::vector<std::string> DataProcessor::GetJobsList() { 
+std::vector<std::string> DataProcessor::GetJobsList() const{ 
 
 	std::vector<std::string> jobList;
 
@@ -13,7 +13,7 @@ std::vector<std::string> DataProcessor::GetJobsList() {
 	return jobList;
 
 };
-std::vector<std::string> DataProcessor::GetDependenciesList() { 
+std::vector<std::string> DataProcessor::GetDependenciesList() const{ 
 
 	std::vector<std::string> dependencyList;
 
@@ -24,6 +24,20 @@ std::vector<std::string> DataProcessor::GetDependenciesList() {
 
 	return dependencyList;
 
+};
+
+InputValidity DataProcessor::CheckInputValidity() const
+{
+	// if find repeated jobs
+		// return Repeated_Jobs
+
+	// if find a dependency without matching job
+		// return Dependency_Doesnt_Exist
+
+	// if can't find an order that fulfills dependencies
+		// return Circular_Dependency
+
+	// else return Valid
 };
 
 // Instantiate new job

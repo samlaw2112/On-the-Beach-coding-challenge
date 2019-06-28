@@ -60,6 +60,13 @@ void AcceptValidInput()
 		jobCounter++;
 	}
 
+	// Check input is valid
+
+	// For each entry
+		// Check no repeated entries
+		// Check dependencies match a real job
+		// Check for simple circular dependencies (e.g. A dependent on B and B dependent on A)
+
 	// Printing input to check this is working
 	std::vector<std::string> jobs = dataProcessor.GetJobsList();
 	std::vector<std::string> dependencies = dataProcessor.GetDependenciesList();
@@ -67,14 +74,6 @@ void AcceptValidInput()
 	{
 		std::cout << jobs[i] << "=>" << dependencies[i] << std::endl;
 	}
-		
-
-	// Check input is valid
-
-	// For each entry
-		// Check no repeated entries
-		// Check dependencies match a real job
-		// Check for simple circular dependencies (e.g. A dependent on B and B dependent on A)
 }
 
 
