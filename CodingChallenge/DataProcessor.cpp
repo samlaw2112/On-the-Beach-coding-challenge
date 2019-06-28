@@ -32,6 +32,10 @@ InputValidity DataProcessor::CheckInputValidity()
 	if (RepeatedJobs())
 	{
 		return InputValidity::Repeated_Jobs;
+	} 
+	else if (SelfDependency())
+	{
+		return InputValidity::Self_Dependency;
 	}
 	else if (NonExistentDependency())
 	{
@@ -90,6 +94,25 @@ bool DataProcessor::RepeatedJobs()
 	// Return false if we made it to the end without finding any repeats
 	return false;
 };
+
+bool DataProcessor::SelfDependency()
+{
+	// For each job
+	for (int i = 0; i < (int)jobs.size(); i++)
+	{
+		// If has a dependency
+		if (jobs[i].HasDependency())
+		{
+			// return true if dependency matches job name
+			if (jobs[i].GetDependency().compare(jobs[i].GetJobName()) == 0)
+			{
+				return true;
+			}
+		}
+	}
+	// Return false if no self dependencies
+	return false;
+}
 
 bool DataProcessor::NonExistentDependency()
 {

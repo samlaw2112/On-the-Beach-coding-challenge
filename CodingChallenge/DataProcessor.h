@@ -12,6 +12,7 @@ enum class InputValidity
 {
 	Valid,
 	Repeated_Jobs,
+	Self_Dependency,
 	Dependency_Doesnt_Exist,
 	Circular_Dependency,
 };
@@ -35,7 +36,10 @@ private:
 	// Checks for repeated job names
 	bool RepeatedJobs();
 
-	// Checks dependencies without a matching job
+	// Checks for jobs that depend on themselves
+	bool SelfDependency();
+
+	// Checks for dependencies without a matching job
 	bool NonExistentDependency();
 
 	// Sorts jobs into correct order if possible and returns true. Returns false if finds a circular dependency.

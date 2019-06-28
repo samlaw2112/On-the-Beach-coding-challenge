@@ -69,6 +69,9 @@ void AcceptValidInput()
 	case InputValidity::Repeated_Jobs:
 		std::cout << "Error: Cannot enter the same job name more than once.\n\n";
 		break;
+	case InputValidity::Self_Dependency:
+		std::cout << "Error: Jobs cannot depend on themselves.\n\n";
+		break;
 	case InputValidity::Dependency_Doesnt_Exist:
 		std::cout << "Error: Cannot enter a dependency that does not match an existing job name.\n\n";
 		break;
