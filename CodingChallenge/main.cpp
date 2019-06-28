@@ -42,9 +42,12 @@ void AcceptValidInput()
 	{
 		// Enter a job
 		std::string jobToEnter;
-		std::cout << "Enter " << jobCounter << "th job\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+		std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
 		std::cin >> jobToEnter;
 		std::cout << std::endl;
+
+		// Quit if user typed fin
+		if (jobToEnter.compare("fin") == 0) { stillEnteringInput = false; break; }
 
 		// Enter a dependency
 		std::string dependencyToEnter;
@@ -55,12 +58,6 @@ void AcceptValidInput()
 		// Add entered job and dependency to list and ask for next one
 		dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
 		jobCounter++;
-
-		// TODO change this to false after user has finished entering input
-		if (jobCounter > 5)
-		{
-			stillEnteringInput = false;
-		}
 	}
 
 	// Printing input to check this is working
