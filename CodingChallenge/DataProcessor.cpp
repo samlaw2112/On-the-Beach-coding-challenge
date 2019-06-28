@@ -24,12 +24,15 @@ std::vector<std::string> DataProcessor::GetDependenciesList() const{
 
 	return dependencyList;
 
-};
+}
 
-InputValidity DataProcessor::CheckInputValidity() const
+
+InputValidity DataProcessor::CheckInputValidity()
 {
-	// if find repeated jobs
-		// return Repeated_Jobs
+	if (RepeatedJobs())
+	{
+		return InputValidity::Repeated_Jobs;
+	} 
 
 	// if find a dependency without matching job
 		// return Dependency_Doesnt_Exist
@@ -37,7 +40,7 @@ InputValidity DataProcessor::CheckInputValidity() const
 	// if can't find an order that fulfills dependencies
 		// return Circular_Dependency
 
-	// else return Valid
+	else { return InputValidity::Valid; }
 };
 
 // Instantiate new job
@@ -55,4 +58,34 @@ void DataProcessor::AddNewJobAndDependency(std::string jobName, std::string depe
 
 	// Add to list of all jobs
 	jobs.push_back(newJob);
-}
+};
+
+bool DataProcessor::RepeatedJobs()
+{
+	// Gather list of job names
+	std::vector<std::string> jobNames;
+	for (int i = 0; i < (int)jobs.size(); i++)
+	{
+		jobNames.push_back(jobs[i].GetJobName());
+	}
+
+	// For each job name
+	for (int i = 0; i < (int)jobNames.size() - 1; i++) // Size - 1 because we don't need to check the last entry
+	{
+		// Remove current job name from the list so we can check against remaining names
+		std::string thisJobName = jobNames.front();
+		jobNames.erase(jobNames.begin());
+
+		// For each remaining job name
+		for (int j = 0; j < (int)jobNames.size(); j++)
+		{
+			// Compare names
+			if (thisJobName.compare(jobNames[j]) == 0)
+			{
+				return true;
+			}
+		}
+	}
+	// Return false if we made it to the end without finding any repeats
+	return false;
+};

@@ -23,7 +23,7 @@ public:
 	void AddNewJobAndDependency(std::string jobName, std::string dependency);
 
 	// Check whether input is valid
-	InputValidity CheckInputValidity() const;
+	InputValidity CheckInputValidity(); // Making this const causes an error - probably it shouldn't
 
 	std::vector<std::string> GetJobsList() const;
 	std::vector<std::string> GetDependenciesList() const;
@@ -31,5 +31,8 @@ public:
 private:
 	// Will keep track of entered jobs and dependencies
 	std::vector <Job> jobs;
+
+	// Checks for repeated job names
+	bool RepeatedJobs();
 
 };

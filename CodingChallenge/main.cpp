@@ -42,7 +42,7 @@ void AcceptValidInput()
 	{
 		// Enter a job
 		std::string jobToEnter;
-		std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+		std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
 		std::cin >> jobToEnter;
 		std::cout << std::endl;
 
@@ -51,7 +51,7 @@ void AcceptValidInput()
 
 		// Enter a dependency
 		std::string dependencyToEnter;
-		std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+		std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
 		std::cin >> dependencyToEnter;
 		std::cout << std::endl;
 
@@ -61,19 +61,23 @@ void AcceptValidInput()
 	}
 
 	// Check input is valid
+	InputValidity inputValidity = dataProcessor.CheckInputValidity();
 
-	// For each entry
-		// Check no repeated entries
-		// Check dependencies match a real job
-		// Check for simple circular dependencies (e.g. A dependent on B and B dependent on A)
+	// Print output depending on input validity
+	switch (inputValidity)
+	{
+	case InputValidity::Repeated_Jobs:
+		std::cout << "Error: Cannot enter the same job name more than once.\n\n";
+		break;
+	}
 
 	// Printing input to check this is working
-	std::vector<std::string> jobs = dataProcessor.GetJobsList();
-	std::vector<std::string> dependencies = dataProcessor.GetDependenciesList();
-	for (int i = 0; i < (int)jobs.size(); i++)
-	{
-		std::cout << jobs[i] << "=>" << dependencies[i] << std::endl;
-	}
+	// std::vector<std::string> jobs = dataProcessor.GetJobsList();
+	// std::vector<std::string> dependencies = dataProcessor.GetDependenciesList();
+	// for (int i = 0; i < (int)jobs.size(); i++)
+	// {
+	// 	std::cout << jobs[i] << "=>" << dependencies[i] << std::endl;
+	// }
 }
 
 
