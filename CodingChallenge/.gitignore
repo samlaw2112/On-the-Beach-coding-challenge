@@ -6,6 +6,7 @@
 *.vcxproj
 *.filters
 *.user
+*Debug/
 
 # Prerequisites
 *.d

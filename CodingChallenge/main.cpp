@@ -13,8 +13,14 @@ int main()
     // Welcome and print instructions for data input
 	ShowWelcomeScreen();
 
-	// Take input, process and output results
-	ProcessInput();
+	bool goAgain = true;
+	while (goAgain)
+	{
+		// Take input, process and output results
+		ProcessInput();
+
+		goAgain = AskToGoAgain();
+	}
 }
 
 void ShowWelcomeScreen()
@@ -84,10 +90,22 @@ void ProcessInput()
 			{
 				std::cout << sortedJobNames[i] << std::endl;
 			}
+			std::cout << std::endl;
 			enteredValidInput = true;
 		}
 	}
 
+}
+
+bool AskToGoAgain()
+{
+	std::cout << "Would you like to enter new data? (yes/no)\n";
+
+	std::string response;
+	std::cin >> response;
+	std::cout << std::endl;
+
+	return(response[0] == 'y' || response[0] == 'Y');
 }
 
 

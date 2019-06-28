@@ -44,6 +44,7 @@ void DataProcessor::AddNewJobAndDependency(std::string jobName, std::string depe
 void DataProcessor::FlushData()
 {
 	jobs.clear();
+	sortedJobNames.clear();
 }
 
 bool DataProcessor::RepeatedJobs()

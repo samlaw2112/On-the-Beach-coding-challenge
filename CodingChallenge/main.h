@@ -7,3 +7,6 @@ void ShowWelcomeScreen();
 
 // Takes input from the user and gives appropriate output
 void ProcessInput();
+
+// Allows the user to start again
+bool AskToGoAgain();
