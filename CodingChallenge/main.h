@@ -5,5 +5,5 @@
 // Welcomes user and shows instructions for data input
 void ShowWelcomeScreen();
 
-// Takes input from the user and errors if not valid
-void AcceptValidInput();
+// Takes input from the user and gives appropriate output
+void ProcessInput();

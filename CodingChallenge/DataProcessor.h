@@ -26,12 +26,15 @@ public:
 	// Check whether input is valid
 	InputValidity CheckInputValidity(); // Not const because job order will be sorted when checking for circular dependencies
 
-	std::vector<std::string> GetJobsList() const;
-	std::vector<std::string> GetDependenciesList() const;
+	// To access sorted job names
+	std::vector<std::string> GetSortedJobsNames() const;
 
 private:
 	// Will keep track of entered jobs and dependencies
 	std::vector <Job> jobs;
+
+	// Sorted job names will be put here
+	std::vector <std::string> sortedJobNames;
 
 	// Checks for repeated job names
 	bool RepeatedJobs();

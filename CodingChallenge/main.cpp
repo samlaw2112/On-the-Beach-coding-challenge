@@ -13,17 +13,8 @@ int main()
     // Welcome and print instructions for data input
 	ShowWelcomeScreen();
 
-	// Accept data input
-	AcceptValidInput();
-
-	// Check data is correct format
-
-	// Collate lists of jobs and their dependencies
-
-	// Figure out correct order of jobs given dependencies
-		// Error if circular dependecy
-
-	// Output job list
+	// Take input, process and output results
+	ProcessInput();
 }
 
 void ShowWelcomeScreen()
@@ -32,7 +23,7 @@ void ShowWelcomeScreen()
 	std::cout << "You will be asked to enter each job to be processed one at a time. For each job you will have the option of including a dependency.\n\n";
 }
 
-void AcceptValidInput()
+void ProcessInput()
 {
 	// Loop until user has finished entering jobs
 	bool stillEnteringInput = true;
@@ -79,16 +70,15 @@ void AcceptValidInput()
 		std::cout << "Error: Found circular dependency. Cannot sort jobs.\n\n";
 		break;
 	case InputValidity::Valid:
-		std::cout << "Successfully sorted jobs.\n\n";
+		// For valid input print the sorted list
+		std::vector<std::string> sortedJobNames = dataProcessor.GetSortedJobsNames();
+		std::cout << "Execute jobs in the following order:\n";
+		for (int i = 0; i < (int)sortedJobNames.size(); i++)
+		{
+			std::cout << sortedJobNames[i] << std::endl;
+		}
 	}
 
-	// Printing input to check this is working
-	// std::vector<std::string> jobs = dataProcessor.GetJobsList();
-	// std::vector<std::string> dependencies = dataProcessor.GetDependenciesList();
-	// for (int i = 0; i < (int)jobs.size(); i++)
-	// {
-	// 	std::cout << jobs[i] << "=>" << dependencies[i] << std::endl;
-	// }
 }
 
 

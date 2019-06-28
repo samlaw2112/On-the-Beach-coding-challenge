@@ -1,31 +1,7 @@
 #include "pch.h"
 #include "DataProcessor.h"
 
-std::vector<std::string> DataProcessor::GetJobsList() const{ 
-
-	std::vector<std::string> jobList;
-
-	for (int i = 0; i < (int)jobs.size(); i++)
-	{
-		jobList.push_back(jobs[i].GetJobName());
-	}
-
-	return jobList;
-
-};
-std::vector<std::string> DataProcessor::GetDependenciesList() const{ 
-
-	std::vector<std::string> dependencyList;
-
-	for (int i = 0; i < (int)jobs.size(); i++)
-	{
-		dependencyList.push_back(jobs[i].GetDependency());
-	}
-
-	return dependencyList;
-
-}
-
+std::vector<std::string> DataProcessor::GetSortedJobsNames() const { return sortedJobNames; }
 
 InputValidity DataProcessor::CheckInputValidity()
 {
@@ -150,8 +126,6 @@ bool DataProcessor::NonExistentDependency()
 
 bool DataProcessor::SortJobsIfPossible()
 {
-	std::vector<std::string> sortedJobNames;
-
 	// Loop until we finish sorting the list or run into a circular dependency
 	bool sortingComplete = false;
 	while (!sortingComplete)
