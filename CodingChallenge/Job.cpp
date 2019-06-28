@@ -2,9 +2,9 @@
 #include "Job.h"
 
 // Getters
-std::string Job::GetJobName() const { return jobName; }
+char Job::GetJobName() const { return jobName; }
 bool Job::HasDependency() const { return hasDependecy; }
-std::string Job::GetDependency() const { return dependency; }
+char Job::GetDependency() const { return dependency; }
 
 // default constructor
 Job::Job()
@@ -13,9 +13,9 @@ Job::Job()
 }
 
 // Setters
-void Job::SetJobName(std::string input) { jobName = input; }
+void Job::SetJobName(char input) { jobName = input; }
 
-void Job::SetDependency(std::string input) { 
+void Job::SetDependency(char input) { 
 	hasDependecy = true;
 	dependency = input; 
 }

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DataProcessor.h"
 
-std::vector<std::string> DataProcessor::GetSortedJobsNames() const { return sortedJobNames; }
+std::vector<char> DataProcessor::GetSortedJobsNames() const { return sortedJobNames; }
 
 InputValidity DataProcessor::CheckInputValidity()
 {
@@ -25,14 +25,14 @@ InputValidity DataProcessor::CheckInputValidity()
 };
 
 // Instantiate new job
-void DataProcessor::AddNewJobAndDependency(std::string jobName, std::string dependency)
+void DataProcessor::AddNewJobAndDependency(char jobName, char dependency)
 {
 	// Instantiate new job
 	Job newJob;
 	newJob.SetJobName(jobName);
 	
 	// Add dependency if the user entered one
-	if (!dependency.empty())
+	if (dependency != ' ')
 	{
 		newJob.SetDependency(dependency);
 	}
@@ -50,7 +50,7 @@ void DataProcessor::FlushData()
 bool DataProcessor::RepeatedJobs()
 {
 	// Gather list of job names
-	std::vector<std::string> jobNames;
+	std::vector<char> jobNames;
 	for (int i = 0; i < (int)jobs.size(); i++)
 	{
 		jobNames.push_back(jobs[i].GetJobName());
@@ -60,14 +60,14 @@ bool DataProcessor::RepeatedJobs()
 	for (int i = 0; i < (int)jobNames.size() - 1; i++) // Size - 1 because we don't need to check the last entry
 	{
 		// Remove current job name from the list so we can check against remaining names
-		std::string thisJobName = jobNames.front();
+		char thisJobName = jobNames.front();
 		jobNames.erase(jobNames.begin());
 
 		// For each remaining job name
 		for (int j = 0; j < (int)jobNames.size(); j++)
 		{
 			// Compare names
-			if (thisJobName.compare(jobNames[j]) == 0)
+			if (thisJobName == jobNames[j])
 			{
 				return true;
 			}
@@ -86,7 +86,7 @@ bool DataProcessor::SelfDependency()
 		if (jobs[i].HasDependency())
 		{
 			// return true if dependency matches job name
-			if (jobs[i].GetDependency().compare(jobs[i].GetJobName()) == 0)
+			if (jobs[i].GetDependency() == jobs[i].GetJobName())
 			{
 				return true;
 			}
@@ -99,7 +99,7 @@ bool DataProcessor::SelfDependency()
 bool DataProcessor::NonExistentDependency()
 {
 	// Gather list of job names
-	std::vector<std::string> jobNames;
+	std::vector<char> jobNames;
 	for (int i = 0; i < (int)jobs.size(); i++)
 	{
 		jobNames.push_back(jobs[i].GetJobName());
@@ -112,12 +112,12 @@ bool DataProcessor::NonExistentDependency()
 		if (jobs[i].HasDependency())
 		{
 			// Check it matches one of the job names
-			std::string thisDependency = jobs[i].GetDependency();
+			char thisDependency = jobs[i].GetDependency();
 			bool foundMatch = false;
 
 			for (int j = 0; j < (int)jobNames.size(); j++)
 			{
-				if (thisDependency.compare(jobNames[j]) == 0)
+				if (thisDependency == jobNames[j])
 				{
 					foundMatch = true;
 				}
@@ -155,12 +155,12 @@ bool DataProcessor::SortJobsIfPossible()
 				else // If dependency
 				{
 					// Check that dependency job is alright added to the list
-					std::string thisDependency = jobs[i].GetDependency();
+					char thisDependency = jobs[i].GetDependency();
 
 					for (int j = 0; j < (int)sortedJobNames.size(); j++)
 					{
 						// If yes add to list
-						if (thisDependency.compare(sortedJobNames[j]) == 0)
+						if (thisDependency == sortedJobNames[j])
 						{
 							sortedJobNames.push_back(jobs[i].GetJobName());
 							jobs.erase(jobs.begin() + i); // Delete sorted job from original jobs list

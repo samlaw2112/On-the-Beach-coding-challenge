@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 /*
 This class will be responible for an individual job - job name, whether it has a dependency, what the dependency is.
@@ -14,17 +13,17 @@ public:
 	Job();
 
 	// Setters
-	void SetJobName(std::string);
-	void SetDependency(std::string);
+	void SetJobName(char);
+	void SetDependency(char);
 
 	// Getters
-	std::string GetJobName() const;
+	char GetJobName() const;
 	bool HasDependency() const;
-	std::string GetDependency() const;
+	char GetDependency() const;
 
 
 private:
-	std::string jobName;
+	char jobName;
 	bool hasDependecy;
-	std::string dependency;
+	char dependency;
 };

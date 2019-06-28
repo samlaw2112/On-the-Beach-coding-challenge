@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <vector>
 #include "Job.h"
 
@@ -21,13 +20,13 @@ class DataProcessor
 {
 public:
 	// Adds new input to lists
-	void AddNewJobAndDependency(std::string jobName, std::string dependency);
+	void AddNewJobAndDependency(char jobName, char dependency);
 
 	// Check whether input is valid
 	InputValidity CheckInputValidity(); // Not const because job order will be sorted when checking for circular dependencies
 
 	// To access sorted job names
-	std::vector<std::string> GetSortedJobsNames() const;
+	std::vector<char> GetSortedJobsNames() const;
 
 	// Deletes existing job data
 	void FlushData();
@@ -37,7 +36,7 @@ private:
 	std::vector <Job> jobs;
 
 	// Sorted job names will be put here
-	std::vector <std::string> sortedJobNames;
+	std::vector <char> sortedJobNames;
 
 	// Checks for repeated job names
 	bool RepeatedJobs();

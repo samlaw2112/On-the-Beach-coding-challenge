@@ -10,7 +10,6 @@ DataProcessor dataProcessor;
 
 int main()
 {
-    // Welcome and print instructions for data input
 	ShowWelcomeScreen();
 
 	bool goAgain = true;
@@ -26,7 +25,6 @@ int main()
 void ShowWelcomeScreen()
 {
 	std::cout << "Welcome to my solution for the On the Beach coding challenge.\n\n";
-	std::cout << "You will be asked to enter each job to be processed one at a time. For each job you will have the option of including a dependency.\n\n";
 }
 
 void ProcessInput()
@@ -42,42 +40,46 @@ void ProcessInput()
 		bool stillEnteringInput = true;
 		int jobCounter = 1; // To keep track of how many jobs have been entered
 
+		// Enter data
+		std::cout << "Enter a series of jobs. Each job should be a single character, optionally followed by a dependency. e.g. enter " <<
+			" a > b for a depends on b. Press return after each individual entry. To finish data entry press return twice.\n\n";
+
 		while (stillEnteringInput)
 		{
-			// Enter a job
-			std::string jobStr;
-			switch (jobCounter)
+			
+			std::string input;
+			std::getline(std::cin, input);
+
+			// If nothing entered, proceed to process input or ask for input if there wasn't any
+			if (input.empty())
 			{
-			case 1:
-				jobStr = "1st";
-				break;
-			case 2:
-				jobStr = "2nd";
-				break;
-			case 3:
-				jobStr = "3rd";
-				break;
-			default:
-				jobStr = std::to_string(jobCounter) + "th";
-				break;
+				if (jobCounter > 1)
+				{
+					stillEnteringInput = false;
+					break;
+				}
+				else
+				{
+					std::cout << "Please enter at least one job.\n\n";
+				}
 			}
-			std::cout << "Enter " << jobStr << " job or type fin if you have finished entering jobs\n";
-			std::string jobToEnter;
-			std::getline(std::cin, jobToEnter);
-			std::cout << std::endl;
+			else
+			{
+				// Parse input
+				char jobToEnter = input.front();
+				// Get dependency if one was entered
+				char dependencyToEnter;
+				if (input.size() > 1)
+				{
+					dependencyToEnter = input.back();
+				}
+				else { dependencyToEnter = ' '; } // Empty character being used to signify no dependency, handles situations where user entered a space after job
 
-			// Quit if user typed fin
-			if (jobToEnter.compare("fin") == 0) { stillEnteringInput = false; break; }
-
-			// Enter a dependency
-			std::string dependencyToEnter;
-			std::cout << "Enter dependency for " << jobStr << " job or press return if there is no dependency\n";
-			std::getline(std::cin, dependencyToEnter);
-			std::cout << std::endl;
-
-			// Add entered job and dependency to list and ask for next one
-			dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
-			jobCounter++;
+				// Add entered job and dependency to list and ask for next one
+				dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
+				jobCounter++;
+			}
+			
 		}
 
 		// Check input is valid
@@ -100,7 +102,7 @@ void ProcessInput()
 			break;
 		case InputValidity::Valid:
 			// For valid input print the sorted list
-			std::vector<std::string> sortedJobNames = dataProcessor.GetSortedJobsNames();
+			std::vector<char> sortedJobNames = dataProcessor.GetSortedJobsNames();
 			std::cout << "Execute jobs in the following order:\n";
 			for (int i = 0; i < (int)sortedJobNames.size(); i++)
 			{
