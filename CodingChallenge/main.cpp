@@ -45,8 +45,24 @@ void ProcessInput()
 		while (stillEnteringInput)
 		{
 			// Enter a job
+			std::string jobStr;
+			switch (jobCounter)
+			{
+			case 1:
+				jobStr = "1st";
+				break;
+			case 2:
+				jobStr = "2nd";
+				break;
+			case 3:
+				jobStr = "3rd";
+				break;
+			default:
+				jobStr = std::to_string(jobCounter) + "th";
+				break;
+			}
+			std::cout << "Enter " << jobStr << " job or type fin if you have finished entering jobs\n";
 			std::string jobToEnter;
-			std::cout << "Enter " << jobCounter << "th job or type fin if you have finished entering jobs\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
 			std::cin >> jobToEnter;
 			std::cout << std::endl;
 
@@ -55,7 +71,7 @@ void ProcessInput()
 
 			// Enter a dependency
 			std::string dependencyToEnter;
-			std::cout << "Enter dependency for " << jobCounter << "th job or na if there is no dependency\n"; // TODO change hardcoded th so reads correctly (1st, 2nd, 3rd etc.)
+			std::cout << "Enter dependency for " << jobStr << " job or na if there is no dependency\n";
 			std::cin >> dependencyToEnter;
 			std::cout << std::endl;
 
