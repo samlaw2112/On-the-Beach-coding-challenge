@@ -4,6 +4,7 @@
 #include "main.h"
 #include "DataProcessor.h"
 #include <vector>
+#include <ctype.h>
 
 // Instantiate data processor
 DataProcessor dataProcessor;
@@ -48,7 +49,7 @@ void ProcessInput()
 
 		// Enter data
 		std::cout << "Enter a series of jobs. Each job should be a single character, optionally followed by a dependency. e.g. enter " <<
-			" a > b for a depends on b. Press return after each individual entry. To finish data entry press return twice.\n\n";
+			" a > b for a depends on b. Press return after each individual entry. To finish data entry enter an empty string.\n\n";
 
 		while (stillEnteringInput)
 		{
@@ -72,29 +73,37 @@ void ProcessInput()
 			else
 			{
 				// Parse input
-				// Remove any spaces
+				// Remove non-letter characters
 				for (int i = 0; i < (int)input.length(); i++)
 				{
-					if (input[i] == ' ')
+					if (!isalpha(input[i]))
 					{
 						input.erase(i, 1);
 						i--; // Reduce iterator since we have removed an element from input
 					}
 				}
 
-				// Take first character as job name
-				char jobToEnter = input.front();
-				// Get dependency if one was entered
-				char dependencyToEnter;
-				if (input.size() > 1)
+				// Only allow a maximum of two letter characters (one job name and one dependency)
+				if (input.size() > 2)
 				{
-					dependencyToEnter = input.back();
+					std::cout << "You may only enter a maximum of two letters per job (one job name and one dependency). Previous entry has been discarded\n";
 				}
-				else { dependencyToEnter = ' '; } // Empty character being used to signify no dependency, handles situations where user entered a space after job
+				else
+				{
+					// Take first character as job name
+					char jobToEnter = input.front();
+					// Get dependency if one was entered
+					char dependencyToEnter;
+					if (input.size() > 1)
+					{
+						dependencyToEnter = input.back();
+					}
+					else { dependencyToEnter = ' '; } // Pass empty string to signify no dependency (impossible for the user to have done so)
 
-				// Add entered job and dependency to list and ask for next one
-				dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
-				jobCounter++;
+					// Add entered job and dependency to list and ask for next one
+					dataProcessor.AddNewJobAndDependency(jobToEnter, dependencyToEnter);
+					jobCounter++;
+				}
 			}
 			
 		}
