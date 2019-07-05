@@ -72,6 +72,17 @@ void ProcessInput()
 			else
 			{
 				// Parse input
+				// Remove any spaces
+				for (int i = 0; i < (int)input.length(); i++)
+				{
+					if (input[i] == ' ')
+					{
+						input.erase(i, 1);
+						i--; // Reduce iterator since we have removed an element from input
+					}
+				}
+
+				// Take first character as job name
 				char jobToEnter = input.front();
 				// Get dependency if one was entered
 				char dependencyToEnter;
